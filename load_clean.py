@@ -1,11 +1,26 @@
+import os
 import psycopg2
 
-conn = psycopg2.connect(
-    dbname="mlbb_quiz",
-    user="postgres",
-    password="getout04",
-    host="localhost"
-)
+# Пытаемся взять URL базы из переменных окружения Railway
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+try:
+    if DATABASE_URL:
+        # Если мы на Railway, подключаемся по одной ссылке
+        conn = psycopg2.connect(DATABASE_URL)
+    else:
+        # Если запускаешь дома, остаются твои старые настройки
+        conn = psycopg2.connect(
+            dbname="mlbb_quiz",
+            user="postgres",
+            password="getout04",
+            host="localhost"
+        )
+    print("✅ Успешное подключение к базе данных!")
+except Exception as e:
+    print(f"❌ Ошибка подключения: {e}")
+    exit(1)
+
 cur = conn.cursor()
 cur.execute("TRUNCATE TABLE questions RESTART IDENTITY")
 
@@ -210,4 +225,5 @@ for q in questions:
 
 conn.commit()
 print(f"✅ База очищена и загружено {len(questions)} уникальных вопросов!")
+
 conn.close()
