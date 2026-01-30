@@ -1,7 +1,7 @@
-aiogram
-sqlalchemy
-aiosqlite
+aiogram==3.4.1
 pydantic==2.5.3
 pydantic-core==2.14.6
-redis
-python-dotenv
+SQLAlchemy==2.0.25
+redis==5.0.1
+python-dotenv==1.0.0
+asyncpg==0.29.0
