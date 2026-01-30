@@ -8,6 +8,7 @@ class RedisClient:
             host=config.REDIS_HOST,
             port=config.REDIS_PORT,
             db=config.REDIS_DB,
+            password=config.REDIS_PASSWORD,  # Вот этой строчки не хватало
             decode_responses=True
         )
     
